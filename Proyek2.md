@@ -1,364 +1,558 @@
 # Laporan Proyek Machine Learning - Leni Fitriani
 
-# Domain Proyek
-Penyakit diabetes merupakan salah satu masalah kesehatan utama yang terus meningkat secara global. Deteksi dini sangat penting untuk mencegah komplikasi yang lebih serius seperti penyakit jantung, gagal ginjal, dan neuropati (World Health Organization, 2022). Menurut data dari International Diabetes Federation (2021), diperkirakan lebih dari 537 juta orang di seluruh dunia hidup dengan diabetes, dan angka ini terus meningkat.
+# **Project Overview**
 
-Machine learning telah terbukti menjadi pendekatan yang efektif untuk membantu dalam skrining awal dan diagnosis penyakit, termasuk diabetes (Chicco, Warrens, & Jurman, 2021). Model prediksi berbasis data dapat memberikan gambaran cepat tentang risiko pasien, memungkinkan intervensi lebih awal dan perencanaan pengobatan yang tepat (Ahmad, Alam, & Wahid, 2018).
+## **Latar Belakang**
+Di era digital saat ini, sistem rekomendasi telah menjadi bagian penting dari platform online, seperti e-commerce, layanan streaming, dan media sosial. Dengan jumlah data yang terus meningkat, pengguna sering merasa kesulitan menemukan item yang relevan di antara jutaan pilihan yang tersedia. Sistem rekomendasi membantu pengguna dengan memberikan saran yang relevan berdasarkan preferensi mereka atau pola interaksi pengguna lain.
 
-## Referensi
-- Ahmad, F., Alam, M., & Wahid, M. (2018). A review on machine learning algorithms using data mining for diabetes research. *Journal of Biomedical Informatics, 81,* 102-114. https://doi.org/10.1016/j.jbi.2018.04.007  
-- Chicco, D., Warrens, M. J., & Jurman, G. (2021). The coefficient of determination R-squared is more informative than adjusted R-squared and should be reported routinely in regression analyses. *Journal of Data Science, 19(3),* 1-17.  
-- World Health Organization. (2022). *Global report on diabetes*. Retrieved from https://www.who.int/publications/i/item/9789241565257  
-- International Diabetes Federation. (2021). *IDF Diabetes Atlas*. Retrieved from https://diabetesatlas.org
+Sebagai contoh, platform streaming seperti **Netflix** menggunakan sistem rekomendasi untuk menyarankan film atau serial yang sesuai dengan preferensi pengguna. Hal serupa juga dilakukan oleh **Amazon** dalam merekomendasikan produk. Implementasi sistem ini tidak hanya meningkatkan pengalaman pengguna, tetapi juga berkontribusi pada keberhasilan bisnis secara keseluruhan.
 
-# Business Understanding
+## **Pentingnya Proyek**
+Proyek ini penting untuk menyelesaikan masalah *information overload* yang dihadapi pengguna. Sistem rekomendasi yang akurat dapat:
+1. **Meningkatkan Pengalaman Pengguna**:
+   - Membantu pengguna menemukan film atau produk yang relevan tanpa usaha pencarian yang panjang.
+2. **Meningkatkan Retensi dan Pendapatan Bisnis**:
+   - Rekomendasi yang relevan meningkatkan kepuasan pengguna, mendorong mereka untuk kembali menggunakan layanan.
+   - Dalam konteks bisnis, rekomendasi yang efektif dapat mendorong penjualan hingga **30%** (*McKinsey & Company, 2021*).
 
-## Problem Statements
-1. **Bagaimana memanfaatkan data kesehatan untuk memprediksi risiko diabetes pada seseorang?**  
-   Penyakit diabetes sering kali tidak terdiagnosis pada tahap awal, sehingga banyak kasus baru ditemukan setelah komplikasi serius muncul. Dengan menggunakan data kesehatan yang tersedia, diperlukan metode untuk memprediksi risiko diabetes secara cepat dan akurat.
+## **Hasil Riset Terkait**
+Berikut adalah beberapa hasil riset yang menunjukkan pentingnya sistem rekomendasi:
 
-2. **Algoritma machine learning apa yang paling efektif dalam memprediksi risiko diabetes?**  
-   Pemilihan algoritma yang tepat sangat penting untuk memastikan prediksi risiko diabetes memiliki akurasi tinggi dengan performa yang optimal.
+1. **Netflix Recommender System**:
+   - Hingga **75%** konten yang ditonton di Netflix berasal dari sistem rekomendasi. Dengan rekomendasi yang relevan, Netflix berhasil menghemat lebih dari **1 miliar dolar per tahun** dengan mengurangi jumlah pelanggan yang berhenti berlangganan (*Gomez-Uribe & Hunt, 2015*).
 
-3. **Bagaimana meningkatkan akurasi model prediksi risiko diabetes?**  
-   Selain memilih algoritma yang tepat, diperlukan strategi untuk mengoptimalkan model, seperti menggunakan hyperparameter tuning atau pendekatan ensemble.
+2. **Laporan McKinsey**:
+   - Menurut laporan **McKinsey & Company (2021)**, personalisasi berbasis rekomendasi dapat meningkatkan penjualan hingga **30%** dan meningkatkan loyalitas pengguna secara signifikan.
 
-## Goals
-1. Mengembangkan model prediktif untuk risiko diabetes menggunakan data kesehatan pasien.  
-2. Mengevaluasi performa beberapa algoritma machine learning untuk menemukan algoritma terbaik dalam memprediksi risiko diabetes.  
-3. Meningkatkan akurasi dan performa model melalui teknik optimasi seperti hyperparameter tuning.  
-
-## Solution Statement
-Untuk mencapai tujuan proyek, langkah-langkah berikut akan dilakukan:
-
-1. **Eksplorasi dan Pemahaman Data (EDA)**  
-   Data akan dianalisis untuk memahami pola distribusi, hubungan antar variabel, dan potensi outlier. Teknik visualisasi akan digunakan untuk mendukung analisis ini.
-
-2. **Implementasi Berbagai Algoritma Machine Learning**  
-   Model seperti **Logistic Regression**, **Random Forest**, dan **Support Vector Machine (SVM)** akan digunakan untuk memprediksi risiko diabetes berdasarkan fitur kesehatan pasien.
-
-3. **Hyperparameter Tuning**  
-   Model terbaik akan dioptimalkan dengan teknik tuning untuk meningkatkan akurasi dan performa prediksi.
-
-4. **Evaluasi Performa Model**  
-   Model akan dievaluasi menggunakan metrik seperti **Akurasi**, **Precision**, **Recall**, dan **F1 Score** untuk memastikan performa yang sesuai dengan kebutuhan.
-
-Solusi ini diharapkan dapat memberikan model prediksi yang andal untuk membantu proses skrining risiko diabetes pada populasi yang lebih luas.
-
-## Data Understanding
-
-### Deskripsi Dataset
-Dataset yang digunakan dalam proyek ini berasal dari [Kaggle - Diabetes Prediction Dataset](https://www.kaggle.com/code/tumpanjawat/diabetes-eda-random-forest-hp?select=diabetes_prediction_dataset.csv). Dataset ini berisi informasi terkait kondisi pasien yang dapat digunakan untuk memprediksi apakah seseorang memiliki diabetes atau tidak. Dataset ini memiliki **100.000 data** dengan **9 kolom**.
-
-### Informasi Dataset
-Informasi dataset diberikan menggunakan fungsi `data.info()`. Berikut adalah hasilnya:
-
-| Kolom                  | Tipe Data | Jumlah Data | Deskripsi                                                                 |
-|------------------------|-----------|-------------|---------------------------------------------------------------------------|
-| gender                | object    | 100,000     | Jenis kelamin pasien.                                                    |
-| age                   | float64   | 100,000     | Usia pasien dalam tahun.                                                 |
-| hypertension          | int64     | 100,000     | Apakah pasien memiliki hipertensi (0: Tidak, 1: Ya).                     |
-| heart_disease         | int64     | 100,000     | Apakah pasien memiliki penyakit jantung (0: Tidak, 1: Ya).               |
-| smoking_history       | object    | 100,000     | Riwayat merokok pasien (current, former, never, dll.).                   |
-| bmi                   | float64   | 100,000     | Indeks Massa Tubuh pasien.                                               |
-| HbA1c_level           | float64   | 100,000     | Tingkat HbA1c (kadar gula darah dalam 3 bulan terakhir).                 |
-| blood_glucose_level   | int64     | 100,000     | Tingkat glukosa darah pasien.                                            |
-| diabetes              | int64     | 100,000     | Target prediksi (0: Tidak Diabetes, 1: Diabetes).                        |
-
-Dataset **tidak memiliki missing values**, sehingga dapat langsung digunakan untuk proses analisis dan pemodelan.
-
-### Statistik Deskriptif
-Berikut adalah statistik deskriptif untuk fitur numerik dalam dataset:
-
-| Fitur                  | Count      | Mean      | Std Dev   | Min       | 25%       | 50%       | 75%       | Max       |
-|------------------------|------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-| age                   | 100,000    | 41.89     | 22.52     | 0.08      | 24.00     | 43.00     | 60.00     | 80.00     |
-| hypertension          | 100,000    | 0.07      | 0.26      | 0.00      | 0.00      | 0.00      | 0.00      | 1.00      |
-| heart_disease         | 100,000    | 0.04      | 0.19      | 0.00      | 0.00      | 0.00      | 0.00      | 1.00      |
-| bmi                   | 100,000    | 27.32     | 6.64      | 10.01     | 23.63     | 27.32     | 29.58     | 95.69     |
-| HbA1c_level           | 100,000    | 5.53      | 1.07      | 3.50      | 4.80      | 5.80      | 6.20      | 9.00      |
-| blood_glucose_level   | 100,000    | 138.06    | 40.71     | 80.00     | 100.00    | 140.00    | 159.00    | 300.00    |
-
-### Exploratory Data Analysis (EDA)
-
-#### 1. Distribusi Usia
-Distribusi usia menunjukkan bahwa dataset mencakup rentang usia yang luas, dari bayi hingga lansia. Sebagian besar data berpusat pada usia 40-60 tahun.
-
-#### 2. Distribusi BMI
-Indeks Massa Tubuh (BMI) mayoritas berada dalam rentang normal, tetapi ada nilai ekstrim yang signifikan. 
-
-#### 3. Hubungan Fitur dengan Diabetes
-- **Hipertensi dan Diabetes**: Pasien dengan hipertensi lebih cenderung memiliki diabetes dibandingkan yang tidak memiliki hipertensi.
-- **HbA1c Level dan Glukosa Darah**: Tingkat HbA1c dan glukosa darah menunjukkan hubungan yang kuat dengan diabetes.
-- **Gender dan Riwayat Merokok**: Tidak menunjukkan pengaruh signifikan terhadap prediksi diabetes.
-
-### Kesimpulan Data Understanding
-- Dataset ini sudah bersih tanpa missing values.
-- Variabel kategori (gender, smoking_history) perlu diubah menjadi numerik melalui proses encoding.
-- Fitur numerik seperti **age**, **bmi**, dan **blood_glucose_level** menunjukkan distribusi normal dengan beberapa outlier yang perlu diperhatikan.
-- Data siap digunakan untuk tahap preprocessing dan modeling.
-
-## Data Preparation
-
-Tahapan data preparation dilakukan untuk mempersiapkan dataset sebelum digunakan dalam pelatihan model machine learning. Berikut langkah-langkahnya:
-
-### 1. Konversi Variabel Kategori menjadi Variabel Dummy
-Dataset memiliki kolom kategori seperti `gender` dan `smoking_history`, yang perlu diubah menjadi format numerik. Proses ini dilakukan menggunakan **one-hot encoding** dengan fungsi `pd.get_dummies()`.
-
-Hasil konversi:
-- Kolom `gender` diubah menjadi `gender_Male` dan `gender_Other`.
-- Kolom `smoking_history` diubah menjadi beberapa kolom dummy seperti `smoking_history_current`, `smoking_history_ever`, dan lainnya.
-
-Proses ini memastikan bahwa model machine learning dapat memproses semua data dalam format numerik.
+3. **Pengaruh AI pada Rekomendasi**:
+   - Dalam laporan **Harvard Business Review**, disebutkan bahwa personalisasi berbasis AI mampu meningkatkan loyalitas pengguna hingga **15%**, karena pengguna merasa rekomendasi lebih relevan dengan kebutuhan mereka (*Davenport et al., 2020*).
 
 ---
 
-### 2. Pemisahan Fitur dan Target
-Dataset dipisahkan menjadi dua bagian utama:
-- **Fitur (X)**: Semua kolom kecuali target (`diabetes`).
-- **Target (y)**: Kolom `diabetes` sebagai label target untuk klasifikasi.
+## **Referensi**
+- Davenport, T., Guha, A., Grewal, D., & Bressgott, T. (2020). How AI Will Change the Future of Marketing. *Harvard Business Review*. Retrieved from [https://hbr.org/](https://hbr.org/)
+- Gomez-Uribe, C. A., & Hunt, N. (2015). The Netflix Recommender System: Algorithms, Business Value, and Innovation. *ACM Transactions on Management Information Systems*, *6*(4), 1-19. [https://doi.org/10.1145/2843948](https://doi
 
-Hasil pemisahan memastikan bahwa input data (X) dan output target (y) dapat digunakan secara terpisah dalam proses pelatihan model.
+# **Business Understanding**
 
----
+## **Problem Statements**
+Sistem rekomendasi bertujuan untuk mengatasi tantangan besar dalam membantu pengguna menemukan item yang relevan. Dalam proyek ini, kami mengidentifikasi beberapa masalah utama:
 
-### 3. Normalisasi Data
-Normalisasi data dilakukan menggunakan **Min-Max Scaler** untuk memastikan semua fitur numerik berada dalam skala yang sama (0 hingga 1). Hal ini penting untuk menghindari bias dalam model yang disebabkan oleh perbedaan skala antar fitur.
+1. **Pernyataan Masalah 1**:  
+   Pengguna merasa kesulitan menemukan film yang sesuai dengan preferensi mereka karena banyaknya pilihan yang tersedia (information overload).  
 
-Contoh hasil normalisasi:
-- Fitur seperti `age`, `bmi`, dan `blood_glucose_level` diubah ke rentang nilai 0 hingga 1.
+2. **Pernyataan Masalah 2**:  
+   Pengguna baru atau film baru sering kali tidak mendapatkan rekomendasi yang akurat (*cold start problem*), karena minimnya data interaksi yang tersedia.  
 
----
-
-### 4. Pembagian Data Latih dan Data Uji
-Dataset dibagi menjadi dua bagian:
-- **Data latih (80%)**: Digunakan untuk melatih model.
-- **Data uji (20%)**: Digunakan untuk mengevaluasi performa model.
-
-Proses pembagian dilakukan dengan memastikan distribusi target tetap seimbang. Distribusi target pada data latih dan uji sebagai berikut:
-- **Data latih**: 91.5% Non-Diabetes, 8.5% Diabetes.
-- **Data uji**: 91.4% Non-Diabetes, 8.6% Diabetes.
-
-Hasil pembagian data ini memastikan bahwa model dapat dilatih dan diuji secara adil dengan distribusi data yang representatif.
+3. **Pernyataan Masalah 3**:  
+   Tidak adanya personalisasi dalam rekomendasi menyebabkan pengguna kehilangan minat untuk mengeksplorasi lebih banyak film.  
 
 ---
 
-### Kesimpulan Data Preparation
-Setelah melalui proses ini, dataset siap digunakan untuk proses modeling:
-1. Variabel kategori telah dikonversi menjadi variabel dummy.
-2. Semua fitur numerik telah dinormalisasi ke rentang nilai 0 hingga 1.
-3. Dataset telah dibagi menjadi data latih dan uji dengan distribusi target yang seimbang.
+## **Goals**
+Proyek ini bertujuan untuk memberikan solusi atas pernyataan masalah di atas dengan membangun sistem rekomendasi yang dapat:  
 
-Dataset yang telah dipersiapkan ini memastikan kualitas data yang optimal untuk pelatihan dan evaluasi model machine learning.
+1. **Jawaban Pernyataan Masalah 1**:  
+   Mengurangi *information overload* dengan merekomendasikan film yang relevan berdasarkan preferensi pengguna dan pola interaksi pengguna lain.  
 
-## Modeling
+2. **Jawaban Pernyataan Masalah 2**:  
+   Mengatasi *cold start problem* dengan memanfaatkan metadata film (genre, deskripsi) dan pola interaksi yang ada.  
 
-Pada tahap ini, dilakukan pemodelan data menggunakan berbagai algoritma machine learning untuk memprediksi diabetes. Model yang digunakan meliputi Logistic Regression, Random Forest, Support Vector Machine (SVM), dan Deep Learning. Setiap model dievaluasi berdasarkan metrik akurasi, precision, recall, dan F1-score.
-
----
-
-### 1. Logistic Regression
-Logistic Regression adalah model yang sederhana namun efektif untuk masalah klasifikasi biner. Model ini menggunakan fungsi logistik untuk memprediksi probabilitas sebuah data termasuk dalam kelas tertentu.
-
-- **Parameter**: 
-  - `random_state=42` untuk memastikan hasil yang konsisten.
-- **Hasil Evaluasi**:
-  - **Akurasi**: 0.96
-  - **Precision**: 0.87
-  - **Recall**: 0.61
-  - **F1 Score**: 0.72
-
-**Kelebihan**:
-- Cepat dalam pelatihan dan prediksi.
-- Mudah diinterpretasikan.
-
-**Kekurangan**:
-- Tidak bekerja optimal jika data memiliki pola yang kompleks atau non-linear.
-
-#### **Cara Kerja**:
-1. Model mempelajari hubungan antara fitur input dan target selama pelatihan.
-2. Probabilitas diprediksi untuk setiap data.
-3. Jika probabilitas lebih tinggi dari ambang batas (default 0.5), data diklasifikasikan sebagai positif (diabetes). Jika tidak, diklasifikasikan sebagai negatif (tidak diabetes).
----
-
-### 2. Random Forest
-Random Forest adalah model ensemble yang menggabungkan banyak pohon keputusan untuk menghasilkan prediksi yang lebih akurat dan stabil.
-
-- **Parameter**:
-  - `random_state=42` untuk konsistensi hasil.
-- **Hasil Evaluasi**:
-  - **Akurasi**: 0.97
-  - **Precision**: 0.94
-  - **Recall**: 0.69
-  - **F1 Score**: 0.80
-
-**Kelebihan**:
-- Menangani fitur yang tidak seimbang dengan baik.
-- Resisten terhadap overfitting dibandingkan model pohon tunggal.
-
-**Kekurangan**:
-- Membutuhkan lebih banyak sumber daya komputasi.
-
-#### **Cara Kerja**:
-1. Dataset dibagi menjadi beberapa subset secara acak.
-2. Setiap subset digunakan untuk melatih pohon keputusan independen.
-3. Prediksi akhir ditentukan melalui voting mayoritas dari semua pohon.
----
-
-### 3. Support Vector Machine (SVM)
-SVM adalah algoritma yang mencoba memisahkan data dengan hyperplane optimal di ruang fitur.
-
-- **Parameter**:
-  - `random_state=42` untuk konsistensi.
-- **Hasil Evaluasi**:
-  - **Akurasi**: 0.96
-  - **Precision**: 0.97
-  - **Recall**: 0.55
-  - **F1 Score**: 0.70
-
-**Kelebihan**:
-- Baik untuk data yang berskala kecil dengan jumlah fitur yang banyak.
-- Memiliki margin yang jelas antara kelas.
-
-**Kekurangan**:
-- Tidak efisien pada dataset besar.
-- Memerlukan tuning parameter yang kompleks.
-
-#### **Cara Kerja**:
-1. SVM mencari hyperplane yang memisahkan dua kelas dengan jarak terbesar (margin) dari data terdekat.
-2. Jika data tidak dapat dipisahkan secara langsung, SVM menggunakan kernel untuk mengubah data ke dimensi yang lebih tinggi, di mana pemisahan dapat dilakukan.
----
-
-### 4. Deep Learning
-Model deep learning menggunakan **Neural Network** dengan arsitektur sederhana yang terdiri dari beberapa lapisan.
-
-- **Arsitektur**:
-  - Input layer: Menggunakan jumlah fitur pada data.
-  - Hidden layers: Dua hidden layer dengan 64 dan 32 neuron.
-  - Output layer: Satu neuron dengan fungsi aktivasi sigmoid.
-- **Hasil Evaluasi**:
-  - **Akurasi**: 0.97
-  - **Precision**: 0.93
-  - **Recall**: 0.68
-  - **F1 Score**: 0.79
-
-**Kelebihan**:
-- Mampu menangkap pola data yang kompleks.
-- Skalabilitas untuk dataset besar.
-
-**Kekurangan**:
-- Membutuhkan waktu pelatihan yang lebih lama.
-- Interpretasi model lebih sulit dibanding model lainnya.
-
-#### **Cara Kerja**:
-1. Data masuk melalui lapisan input dan diproses melalui beberapa lapisan tersembunyi.
-2. Setiap lapisan menerapkan fungsi aktivasi untuk menangkap pola non-linear dalam data.
-3. Lapisan output memberikan prediksi probabilitas.
-4. Model dilatih melalui proses iteratif untuk meminimalkan kesalahan prediksi.
+3. **Jawaban Pernyataan Masalah 3**:  
+   Menyediakan rekomendasi yang personal untuk meningkatkan keterlibatan pengguna dan kepuasan mereka terhadap platform.  
 
 ---
 
-### 5. Perbandingan Hasil Model
-Hasil evaluasi semua model dirangkum dalam tabel berikut:
+## **Solution Approach**
+Untuk mencapai tujuan proyek ini, kami menggunakan dua pendekatan utama dalam membangun sistem rekomendasi:
 
-| Model               | Akurasi | Precision | Recall | F1 Score |
-|---------------------|---------|-----------|--------|----------|
-| Logistic Regression | 0.95920 | 0.871048  | 0.612998 | 0.719588 |
-| Random Forest       | 0.96995 | 0.946011  | 0.687354 | 0.796202 |
-| SVM                 | 0.96010 | 0.967146  | 0.551522 | 0.702461 |
-| Deep Learning       | 0.96960 | 0.935252  | 0.685012 | 0.790808 |
+### **Solution 1: Content-Based Filtering**
+Pendekatan ini memanfaatkan metadata film seperti genre, judul, dan deskripsi untuk menghitung kesamaan antar item.  
+- **Kelebihan**:
+  - Tidak membutuhkan data interaksi pengguna lain.
+  - Dapat memberikan rekomendasi untuk film baru.  
+- **Kekurangan**:
+  - Terbatas pada item yang memiliki metadata.
+  - Tidak dapat merekomendasikan film yang tidak serupa dengan item yang pernah dilihat pengguna.  
 
----
+### **Solution 2: Collaborative Filtering**
+Pendekatan ini menganalisis pola interaksi pengguna dengan film untuk memberikan rekomendasi.  
+- **Kelebihan**:
+  - Dapat menemukan pola tersembunyi yang tidak terlihat dari metadata.
+  - Memberikan rekomendasi berdasarkan preferensi kolektif pengguna lain.  
+- **Kekurangan**:
+  - Rentan terhadap masalah *cold start*.
+  - Memerlukan data interaksi yang cukup untuk menghasilkan rekomendasi yang akurat.  
 
-### 6. Model Terbaik
-Dari hasil evaluasi, model **Random Forest** memiliki performa terbaik berdasarkan keseimbangan antara akurasi, precision, recall, dan F1-score. Model ini dipilih sebagai model akhir karena performanya yang unggul dan kemampuannya menangani dataset yang kompleks.
-
-## Evaluation
-
-Pada tahap ini, dilakukan evaluasi terhadap performa model berdasarkan berbagai metrik, yaitu **Akurasi**, **Precision**, **Recall**, dan **F1 Score**. Selain itu, analisis confusion matrix digunakan untuk memahami prediksi yang benar dan salah dari model.
-
----
-
-### Metrik Evaluasi
-
-1. **Akurasi**: Mengukur proporsi prediksi yang benar dari total prediksi.
-2. **Precision**: Mengukur ketepatan prediksi kelas positif dari semua prediksi positif.
-3. **Recall**: Mengukur sensitivitas model dalam mendeteksi kelas positif.
-4. **F1 Score**: Rata-rata harmonis antara precision dan recall.
+### **Hybrid Approach (Opsional)**
+Menggabungkan Content-Based Filtering dan Collaborative Filtering untuk memanfaatkan keunggulan masing-masing pendekatan.  
+- **Contoh Implementasi**:  
+  - Gunakan Content-Based Filtering untuk menangani film baru dan Collaborative Filtering untuk menangkap pola interaksi global.
 
 ---
 
-### Hasil Evaluasi
+## **Kesimpulan**
+Dengan solusi yang diusulkan, proyek ini bertujuan untuk membangun sistem rekomendasi yang relevan, personal, dan mampu mengatasi tantangan seperti *information overload* dan *cold start problem*.  
 
-Berikut adalah hasil evaluasi dari keempat model yang digunakan:
+# **Data Understanding**
 
-| Model               | Akurasi | Precision | Recall | F1 Score |
-|---------------------|---------|-----------|--------|----------|
-| Logistic Regression | 0.95920 | 0.871048  | 0.612998 | 0.719588 |
-| Random Forest       | 0.96995 | 0.946011  | 0.687354 | 0.796202 |
-| SVM                 | 0.96010 | 0.967146  | 0.551522 | 0.702461 |
-| Deep Learning       | 0.96960 | 0.935252  | 0.685012 | 0.790808 |
+## **Informasi Dataset**
+Dataset yang digunakan adalah **MovieLens 100k Dataset**, yang berisi **100,000 interaksi** pengguna dengan film dalam bentuk rating. Dataset ini menyediakan data lengkap untuk membangun sistem rekomendasi, termasuk metadata film, informasi pengguna, dan genre.
 
-Dari tabel di atas, model Random Forest memiliki performa terbaik secara keseluruhan dengan nilai **F1 Score** tertinggi.
+**Sumber Data**:  
+Dataset ini dapat diakses dan diunduh melalui tautan berikut:  
+[MovieLens 100k Dataset - Kaggle](https://www.kaggle.com/datasets/prajitdatta/movielens-100k-dataset/data)
+
+### **Statistik Umum Dataset**
+- **Jumlah Pengguna**: 943  
+- **Jumlah Film**: 1,682  
+- **Jumlah Rating**: 100,000  
+- **Skala Rating**: 1 (sangat buruk) hingga 5 (sangat baik).
+
+Dataset terdiri dari beberapa file utama yang masing-masing memiliki fungsi khusus:
+
+---
+
+## **Deskripsi File Dataset**
+
+### **1. `u.data` (Data Rating)**
+- **Path**: `/content/u.data`  
+- **Deskripsi**:  
+  Menyimpan informasi tentang interaksi pengguna dengan film dalam bentuk rating.  
+- **Kolom**:
+  - **`user_id`**: ID unik untuk setiap pengguna.
+  - **`item_id`**: ID unik untuk setiap film.
+  - **`rating`**: Rating yang diberikan pengguna terhadap film (skala 1-5).
+  - **`timestamp`**: Waktu pemberian rating.
+- **Fungsi**:  
+  Digunakan untuk membangun matriks interaksi pengguna-film (*User-Item Matrix*) sebagai dasar Collaborative Filtering.
 
 ---
 
-### Analisis Confusion Matrix
-
-Confusion matrix memberikan informasi tentang prediksi benar (True Positives dan True Negatives) serta prediksi salah (False Positives dan False Negatives). Berikut adalah confusion matrix dari masing-masing model:
-
-![confusion matrik](https://github.com/user-attachments/assets/acea79b3-6a4d-40ef-a5e0-7cd3af38e449)
-Hasil Confusion Matrix
-
-### 1. Logistic Regression
-Confusion Matrix untuk model Logistic Regression menunjukkan:
-- **True Positive (TP)**: 1047, prediksi diabetes benar.
-- **True Negative (TN)**: 18137, prediksi tidak diabetes benar.
-- **False Positive (FP)**: 155, prediksi diabetes salah.
-- **False Negative (FN)**: 661, prediksi tidak diabetes salah.
-
-Analisis:
-- Logistic Regression memiliki akurasi sebesar **95.92%**. Namun, recall cukup rendah (**61.30%**) yang menunjukkan bahwa model ini tidak sepenuhnya efektif dalam mendeteksi kasus diabetes.
-- 
----
-### 2. Random Forest
-Confusion Matrix untuk model Random Forest menunjukkan:
-- **True Positive (TP)**: 1174, prediksi diabetes benar.
-- **True Negative (TN)**: 18225, prediksi tidak diabetes benar.
-- **False Positive (FP)**: 67, prediksi diabetes salah.
-- **False Negative (FN)**: 534, prediksi tidak diabetes salah.
-
-Analisis:
-- Random Forest menunjukkan kinerja yang lebih baik dibandingkan Logistic Regression dengan akurasi **96.99%** dan F1 Score **79.62%**. Recall meningkat menjadi **68.73%**, yang menunjukkan peningkatan dalam mendeteksi kasus diabetes.
-- 
----
-### 3. Support Vector Machine (SVM)
-Confusion Matrix untuk model SVM menunjukkan:
-- **True Positive (TP)**: 942, prediksi diabetes benar.
-- **True Negative (TN)**: 18260, prediksi tidak diabetes benar.
-- **False Positive (FP)**: 32, prediksi diabetes salah.
-- **False Negative (FN)**: 766, prediksi tidak diabetes salah.
-
-Analisis:
-- SVM memiliki akurasi **96.01%**, tetapi recall **55.15%** yang cukup rendah dibandingkan Random Forest. Ini menunjukkan bahwa SVM lebih baik dalam menghindari false positives daripada mendeteksi kasus diabetes.
+### **2. `u.item` (Metadata Film)**
+- **Path**: `/content/u.item`  
+- **Deskripsi**:  
+  Menyimpan metadata tentang film, termasuk judul, genre, dan tanggal rilis.  
+- **Kolom**:
+  - **`item_id`**: ID unik untuk setiap film.
+  - **`title`**: Judul film.
+  - **`release_date`**: Tanggal rilis film.
+  - **`video_release_date`**: Tanggal rilis video (jika ada).
+  - **`IMDb_URL`**: URL IMDb untuk film.
+  - **Genre Columns**: Kolom one-hot encoding untuk berbagai genre seperti:
+    - **`Action`**, **`Adventure`**, **`Drama`**, **`Comedy`**, dll.
+- **Fungsi**:  
+  Digunakan dalam Content-Based Filtering untuk menghitung kesamaan antar film berdasarkan genre.
 
 ---
-### 4. Deep Learning
-Confusion Matrix untuk model Deep Learning menunjukkan:
-- **True Positive (TP)**: 1170, prediksi diabetes benar.
-- **True Negative (TN)**: 18211, prediksi tidak diabetes benar.
-- **False Positive (FP)**: 81, prediksi diabetes salah.
-- **False Negative (FN)**: 538, prediksi tidak diabetes salah.
 
-Analisis:
-- Deep Learning menunjukkan kinerja akurasi **96.89%** dan F1 Score **79.08%**, mendekati Random Forest. Namun, model ini memiliki performa yang lebih stabil berdasarkan metrik evaluasi.
+### **3. `u.user` (Informasi Pengguna)**
+- **Path**: `/content/u.user`  
+- **Deskripsi**:  
+  Menyimpan informasi demografis pengguna.  
+- **Kolom**:
+  - **`user_id`**: ID unik untuk setiap pengguna.
+  - **`age`**: Usia pengguna.
+  - **`gender`**: Jenis kelamin pengguna (M/F).
+  - **`occupation`**: Pekerjaan pengguna.
+  - **`zip_code`**: Kode pos tempat tinggal pengguna.
+- **Fungsi**:  
+  Berguna untuk analisis demografi pengguna atau personalisasi rekomendasi berdasarkan atribut pengguna.
 
 ---
-### Kesimpulan
-1. **Model terbaik**: Random Forest.
-   - Alasan: Random Forest memiliki keseimbangan terbaik antara Akurasi (0.97), Precision (0.94), Recall (0.69), dan F1 Score (0.80).
-2. Logistic Regression dan Deep Learning juga memiliki performa yang baik, namun sedikit kalah dibandingkan Random Forest.
-3. SVM memiliki precision tinggi (0.97) namun recall rendah (0.55), sehingga kurang baik dalam mendeteksi kasus positif diabetes.
 
-Model Random Forest dipilih untuk digunakan pada tahap implementasi karena performa terbaiknya dalam mendeteksi diabetes berdasarkan dataset yang digunakan.
+### **4. `u.genre` (Genre Film)**
+- **Path**: `/content/u.genre`  
+- **Deskripsi**:  
+  Menyimpan daftar genre yang tersedia dalam dataset.  
+- **Kolom**:
+  - **`genre_name`**: Nama genre (misalnya: Action, Comedy, Drama).
+  - **`genre_id`**: ID unik untuk setiap genre.
+- **Fungsi**:  
+  Digunakan untuk memahami genre dalam dataset dan membantu analisis eksplorasi atau visualisasi.
+
+---
+
+### **5. `u.info` (Ringkasan Dataset)**
+- **Path**: `/content/u.info`  
+- **Deskripsi**:  
+  Menyimpan informasi ringkasan dataset, seperti jumlah pengguna, jumlah film, dan jumlah rating.  
+- **Format**: Teks biasa dengan statistik dasar dataset.
+- **Fungsi**:  
+  Memberikan wawasan awal tentang skala dataset sebelum analisis lebih lanjut.
+
+---
+
+### **6. `u.occupation` (Daftar Pekerjaan)**
+- **Path**: `/content/u.occupation`  
+- **Deskripsi**:  
+  Menyimpan daftar pekerjaan yang tersedia dalam dataset.  
+- **Format**: Teks biasa dengan satu pekerjaan per baris.
+- **Fungsi**:  
+  Digunakan untuk eksplorasi lebih lanjut atau analisis demografi.
+
+---
+
+## **Exploratory Data Analysis (EDA)**
+
+## **Distribusi Rating**
+Distribusi rating menunjukkan bahwa sebagian besar pengguna memberikan rating di kisaran **3 hingga 5**, dengan rating **4** sebagai yang paling sering diberikan. Hal ini mengindikasikan adanya **bias positif** dalam dataset, di mana pengguna lebih cenderung memberikan rating tinggi daripada rendah.
+![rating](https://github.com/user-attachments/assets/5c3b9cf7-6b3a-4826-9eab-385218a032e6)
+
+
+### **Insight**:
+- Rating **4** adalah yang paling banyak diberikan oleh pengguna.
+- Rating **1** adalah yang paling jarang diberikan, menunjukkan pengguna jarang memberikan ulasan yang sangat negatif.
+
+---
+
+## **Top-10 Film dengan Rating Terbanyak**
+Film yang mendapatkan jumlah rating tertinggi dalam dataset adalah **"Toy Story (1995)"**, diikuti oleh **"Star Wars (1977)"** dan **"Fargo (1996)"**. Sebagian besar film yang populer dirilis pada tahun **1995-1997**, yang merupakan masa puncak popularitas film-film ini.
+
+### **Insight**:
+- Film **"Toy Story (1995)"** menerima jumlah rating tertinggi (583 rating).
+- Film populer cenderung berasal dari genre dominan seperti **Drama**, **Comedy**, atau **Action**.
+
+**Daftar Top-10 Film dengan Rating Terbanyak**:
+| **Rank** | **Judul Film**           | **Jumlah Rating** |
+|----------|--------------------------|-------------------|
+| 1        | Toy Story (1995)         | 583               |
+| 2        | Star Wars (1977)         | 509               |
+| 3        | Fargo (1996)             | 508               |
+| 4        | Independence Day (1996)  | 507               |
+| 5        | Return of the Jedi (1983)| 485               |
+| 6        | Contact (1997)           | 481               |
+| 7        | English Patient, The (1996)| 478            |
+| 8        | Scream (1996)            | 452               |
+| 9        | Liar Liar (1997)         | 431               |
+| 10       | Air Force One (1997)     | 429               |
+
+---
+
+## **Distribusi Film Berdasarkan Genre**
+Sebagian besar film dalam dataset termasuk dalam genre **Drama**, diikuti oleh **Comedy** dan **Action**. Genre seperti **Western**, **Fantasy**, dan **Film-Noir** memiliki jumlah film yang lebih sedikit, sehingga mungkin kurang terwakili dalam analisis.
+![berdasarkan genre](https://github.com/user-attachments/assets/ac3150bf-a6b1-485b-b0fb-2a46c453c508)
+
+
+### **Insight**:
+- Genre **Drama** adalah genre dominan, dengan lebih dari **700 film**.
+- Genre **Comedy** dan **Action** juga cukup dominan, masing-masing memiliki lebih dari **400 film**.
+- Genre dengan jumlah film yang sedikit seperti **Western** atau **Fantasy** mungkin mengalami kesulitan dalam menghasilkan rekomendasi yang relevan karena keterbatasan data.
+
+---
+
+## **Distribusi Usia Pengguna**
+Sebagian besar pengguna dalam dataset berada pada kelompok usia **20 hingga 40 tahun**, dengan puncak pada usia **30 tahun**. Rentang usia di luar kelompok ini kurang terwakili dalam dataset.
+![Usia Pengguna](https://github.com/user-attachments/assets/18f92997-7b03-43b3-8b04-0ade41b51cbb)
+
+
+### **Insight**:
+- Dataset ini kemungkinan besar mencerminkan preferensi pengguna dewasa muda, yang merupakan target demografi utama.
+- Kelompok usia di luar **20-40 tahun** mungkin mengalami kurangnya akurasi rekomendasi karena jumlah interaksi yang lebih sedikit.
+
+---
+
+## **Kesimpulan**
+1. **Bias Positif dalam Rating**: Sebagian besar rating berada di kisaran **3 hingga 5**, menunjukkan kecenderungan pengguna memberikan ulasan positif.
+2. **Film Populer**: Film seperti **"Toy Story (1995)"** dan **"Star Wars (1977)"** mendominasi rating, menunjukkan preferensi terhadap film-film klasik populer.
+3. **Genre Dominan**: **Drama**, **Comedy**, dan **Action** adalah genre yang paling banyak terwakili, sementara genre minor seperti **Fantasy** atau **Western** mungkin kurang relevan untuk rekomendasi.
+4. **Demografi Pengguna**: Pengguna dewasa muda (20-40 tahun) adalah kelompok yang paling aktif dalam memberikan rating, sehingga sistem rekomendasi dapat diarahkan untuk kelompok ini.
+
+Dataset ini memberikan dasar yang baik untuk membangun sistem rekomendasi menggunakan pendekatan **Content-Based Filtering** atau **Collaborative Filtering**.
+
+# **Data Preparation**
+
+## **Tahapan dan Analisis**
+
+### **1. Mengecek Nilai Kosong**
+Pada tahap ini, dataset diperiksa untuk mengetahui apakah terdapat nilai kosong (*missing values*) di dalamnya. Jika ada, nilai kosong ditangani sesuai kebutuhan, misalnya dengan mengisi nilai default seperti **0** untuk data numerik atau string kosong (`''`) untuk data kategoris.
+
+#### **Hasil:**
+- Dataset **Ratings** tidak memiliki nilai kosong.
+- Dataset **Movies** memiliki beberapa nilai kosong, yang telah diisi dengan string kosong.
+- Dataset **Users** juga tidak memiliki nilai kosong.
+
+#### **Alasan:**
+Mengisi nilai kosong memastikan dataset tidak mengalami error selama proses transformasi atau analisis, terutama saat membangun matriks interaksi.
+
+---
+
+### **2. Membuat Matriks User-Item**
+Dataset interaksi pengguna dan film diubah menjadi **User-Item Matrix**, di mana:
+- Baris mewakili ID pengguna.
+- Kolom mewakili ID film.
+- Nilai dalam matriks adalah rating yang diberikan oleh pengguna untuk film tertentu.
+
+#### **Hasil:**
+Matriks User-Item berhasil dibuat, dengan dimensi **943 pengguna x 1682 film**. Nilai yang kosong dalam matriks diisi dengan **0**, menunjukkan bahwa pengguna belum memberikan rating untuk film tersebut.
+
+#### **Alasan:**
+- Matriks User-Item adalah struktur data utama yang digunakan dalam algoritma **Collaborative Filtering**.
+- Nilai kosong diganti dengan **0** agar matriks bisa diolah oleh algoritma.
+
+---
+
+### **3. Menggabungkan Genre Menjadi String**
+Untuk pendekatan **Content-Based Filtering**, kolom genre yang awalnya dalam format one-hot encoding digabungkan menjadi string deskriptif. Genre digabung dengan nama film untuk membuat metadata.
+
+#### **Hasil:**
+Kolom baru `genre_combined` berhasil dibuat, berisi gabungan informasi genre dari setiap film. Contoh:
+- **Film**: Toy Story (1995) → **Genre Combined**: Animation Children Comedy.
+
+#### **Alasan:**
+- Pendekatan Content-Based Filtering membutuhkan deskripsi lengkap untuk menghitung kesamaan antar film.
+- Menggabungkan genre membuat representasi deskriptif lebih sederhana.
+
+---
+
+### **4. Normalisasi Matriks User-Item**
+Nilai dalam **User-Item Matrix** dinormalisasi dengan cara:
+- Mengurangi rata-rata rating setiap pengguna dari setiap rating.
+- Normalisasi dilakukan untuk mengatasi bias pengguna yang cenderung memberikan rating terlalu tinggi atau terlalu rendah secara konsisten.
+
+#### **Hasil:**
+Matriks normalisasi berhasil dibuat. Nilai positif menunjukkan rating lebih tinggi dari rata-rata pengguna, sedangkan nilai negatif menunjukkan rating lebih rendah dari rata-rata.
+
+#### **Alasan:**
+- Normalisasi membantu algoritma Collaborative Filtering menghasilkan rekomendasi yang lebih akurat dengan menghilangkan bias personal dari pengguna.
+
+---
+
+# **Modeling**
+
+Pada tahap ini, dua pendekatan sistem rekomendasi diterapkan untuk menyelesaikan permasalahan. Kedua pendekatan tersebut adalah:
+1. **Content-Based Filtering (CBF)**: Berdasarkan metadata film seperti genre.
+2. **Collaborative Filtering (CF)**: Berdasarkan pola interaksi pengguna terhadap film.
+
+---
+
+## **1. Content-Based Filtering (CBF)**
+
+### **Cara Kerja:**
+Content-Based Filtering merekomendasikan film yang mirip dengan film yang telah disukai atau dirating tinggi oleh pengguna. Kesamaan antar film dihitung berdasarkan metadata seperti genre menggunakan teknik **TF-IDF** dan **Cosine Similarity**.
+
+### **Proses:**
+1. **Menggabungkan Metadata**: Informasi genre untuk setiap film digabungkan menjadi satu string.
+2. **Menghitung Kesamaan**: Kesamaan antar film dihitung menggunakan Cosine Similarity berdasarkan representasi TF-IDF.
+3. **Menyusun Rekomendasi**: Film dengan kesamaan tertinggi dengan film yang dirating tinggi oleh pengguna direkomendasikan.
+
+### **Hasil Rekomendasi**:
+Sebagai contoh, untuk film **"Star Wars (1977)"**, berikut adalah rekomendasi yang dihasilkan:
+![star](https://github.com/user-attachments/assets/b54d18e5-bc9d-4992-83c9-24159de3196e)
+
+
+### **Kelebihan:**
+- **Cold Start untuk Pengguna Baru**: Tidak memerlukan data interaksi pengguna.
+- **Mudah Diimplementasikan**: Menggunakan metadata yang tersedia.
+- **Independen terhadap Pengguna**: Rekomendasi hanya bergantung pada item.
+
+### **Kekurangan:**
+- **Keterbatasan Metadata**: Kualitas rekomendasi sangat bergantung pada kelengkapan metadata.
+- **Kurangnya Personalisasi**: Tidak mempertimbangkan preferensi pengguna.
+- **Over-Specialization**: Rekomendasi hanya mencakup item yang serupa, sehingga tidak memberikan variasi.
+
+---
+
+## **2. Collaborative Filtering (CF)**
+
+### **Cara Kerja:**
+Collaborative Filtering merekomendasikan film berdasarkan pola interaksi pengguna lain yang memiliki preferensi serupa. Model ini mencari kesamaan antar pengguna atau memanfaatkan teknik dekomposisi matriks seperti **SVD** untuk menghasilkan prediksi rating.
+
+### **Proses:**
+1. **Matriks Interaksi**: Membuat *User-Item Matrix* berdasarkan data interaksi pengguna.
+2. **Dekomposisi Matriks**: Menggunakan teknik SVD untuk merepresentasikan hubungan antar pengguna dan film.
+3. **Prediksi Rating**: Membuat prediksi rating untuk setiap pasangan pengguna-film.
+4. **Menyusun Rekomendasi**: Film dengan prediksi rating tertinggi direkomendasikan.
+
+### **Hasil Rekomendasi**:
+Sebagai contoh, untuk pengguna dengan ID **1**, berikut adalah rekomendasi yang dihasilkan:
+![id1](https://github.com/user-attachments/assets/cafcef1a-4e1b-46c7-a452-d024b6cb105b)
+
+
+### **Kelebihan:**
+- **Personalisasi**: Rekomendasi berbasis preferensi pengguna.
+- **Eksplorasi**: Dapat merekomendasikan item yang tidak serupa tetapi relevan.
+- **Efektif untuk Data Besar**: Menggunakan pola dari data interaksi yang besar untuk hasil yang lebih baik.
+
+### **Kekurangan:**
+- **Cold Start Problem**: Tidak dapat merekomendasikan item untuk pengguna atau film baru.
+- **Kompleksitas Komputasi**: Memerlukan komputasi yang tinggi untuk dekomposisi matriks.
+- **Ketergantungan pada Data**: Performa menurun jika data interaksi pengguna-film sedikit.
+
+---
+
+## **Perbandingan Pendekatan**
+
+| **Aspek**               | **Content-Based Filtering (CBF)**                        | **Collaborative Filtering (CF)**                    |
+|--------------------------|---------------------------------------------------------|----------------------------------------------------|
+| **Data yang Dibutuhkan** | Metadata film (genre, deskripsi, dll.)                  | Interaksi pengguna (rating, klik, dll.)            |
+| **Pendekatan Utama**     | Mengukur kesamaan antar item                            | Mencari kesamaan antar pengguna                   |
+| **Kelebihan**            | - Tidak memerlukan data pengguna<br>- Cocok untuk item baru | - Lebih personal<br>- Relevansi lebih tinggi      |
+| **Kekurangan**           | - Tidak mempertimbangkan preferensi pengguna            | - Bergantung pada data interaksi<br>- Cold start issue |
+
+---
+
+## **Kesimpulan**
+
+1. **Content-Based Filtering (CBF)**:
+   - Cocok untuk kasus di mana metadata item tersedia tetapi data interaksi pengguna minim.
+   - Berguna untuk menangani item baru (*cold start*).
+
+2. **Collaborative Filtering (CF)**:
+   - Cocok untuk rekomendasi berbasis pola interaksi pengguna, menghasilkan rekomendasi yang lebih personal.
+   - Bergantung pada data interaksi, sehingga menghadapi masalah untuk pengguna atau item baru.
+
+Kombinasi kedua pendekatan ini dapat memberikan hasil rekomendasi yang lebih optimal dan serbaguna dalam sistem rekomendasi.
+# **Kombinasi kedua pendekatan**
+
+Sistem rekomendasi telah diintegrasikan sehingga pengguna dapat memilih salah satu dari dua pendekatan:
+1. **Content-Based Filtering (CBF)**: Rekomendasi berdasarkan film yang pengguna sukai.
+2. **Collaborative Filtering (CF)**: Rekomendasi berdasarkan pola interaksi pengguna lain dengan preferensi serupa.
+
+---
+
+## **Contoh Hasil**
+### **Input:**
+- Pilihan metode: **Content-Based Filtering**
+- Judul film: **"Star Wars (1977)"**
+
+### **Output Rekomendasi:**
+1. Return of the Jedi (1983)  
+2. Empire Strikes Back, The (1980)  
+3. Starship Troopers (1997)  
+4. Independence Day (ID4) (1996)  
+5. Mars Attacks! (1996)  
+6. Stargate (1994)  
+7. Jurassic Park (1993)  
+8. Star Trek: First Contact (1996)  
+9. Star Trek VI: The Undiscovered Country (1991)  
+10. Star Trek: The Wrath of Khan (1982)  
+
+---
+
+## **Penjelasan**
+### **1. Content-Based Filtering:**
+Rekomendasi ini didasarkan pada kesamaan antar metadata film, seperti genre atau deskripsi. Dalam kasus ini:
+- Sistem merekomendasikan film-film yang mirip dengan **"Star Wars (1977)"**.
+- Contohnya adalah **"Return of the Jedi (1983)"** dan **"Empire Strikes Back, The (1980)"**, yang memiliki genre atau tema serupa.
+
+### **2. Collaborative Filtering:**
+Sebagai alternatif, sistem dapat memberikan rekomendasi berdasarkan pola interaksi pengguna lain dengan preferensi serupa. Dalam metode ini:
+- Sistem memanfaatkan data rating pengguna lain untuk merekomendasikan film dengan skor prediksi tertinggi.
+
+![kombinasi](https://github.com/user-attachments/assets/b17d83b7-6bdf-471d-8eeb-f2d86a3801aa)
+
+---
+
+## **Manfaat Integrasi**
+1. **Fleksibilitas**:
+   - **CBF** cocok untuk pengguna baru atau film baru yang belum memiliki banyak data interaksi.
+   - **CF** memberikan rekomendasi yang lebih personal berdasarkan preferensi pengguna lain.
+2. **Diversifikasi Rekomendasi**:
+   - Sistem dapat memberikan rekomendasi berbasis metadata untuk item serupa.
+   - Sistem juga dapat memberikan rekomendasi berbasis interaksi pengguna, yang lebih personal.
+3. **Pengalaman Pengguna yang Lebih Baik**:
+   - Dengan memberikan pilihan metode, sistem dapat melayani berbagai kebutuhan pengguna.
+
+---
+
+## **Kesimpulan**
+Integrasi kedua metode ini memberikan fleksibilitas yang lebih besar kepada pengguna, memastikan bahwa sistem dapat memberikan rekomendasi yang relevan dalam berbagai skenario. 
+
+- **Content-Based Filtering** memberikan rekomendasi berbasis metadata item, cocok untuk pengguna baru.
+- **Collaborative Filtering** memberikan rekomendasi berbasis interaksi pengguna, cocok untuk menghasilkan rekomendasi yang personal.
+
+Dengan menyediakan opsi kedua metode ini, sistem dapat menjadi lebih adaptif dan serbaguna, memberikan pengalaman pengguna yang lebih baik. 🚀
+
+# **Evaluation**
+
+Evaluasi dilakukan untuk mengukur performa sistem rekomendasi yang telah dibuat. Pada tahap ini, dua metrik evaluasi digunakan untuk menilai pendekatan **Content-Based Filtering** dan **Collaborative Filtering**:
+1. **Root Mean Square Error (RMSE)**: Digunakan untuk mengukur kesalahan prediksi pada Collaborative Filtering.
+2. **Precision@K**: Digunakan untuk mengukur kualitas rekomendasi pada Content-Based Filtering.
+
+---
+
+## **1. Root Mean Square Error (RMSE)**
+
+### **Penjelasan:**
+- RMSE digunakan untuk mengukur rata-rata kesalahan antara rating yang diprediksi oleh model dengan rating sebenarnya.
+- Metrik ini cocok untuk **Collaborative Filtering**, di mana model mencoba memprediksi rating pengguna terhadap item yang belum dirating.
+
+### **Formula RMSE**:
+![rmse](https://github.com/user-attachments/assets/ad530f84-6cb8-41e0-9e97-06a5bfc57390)
+
+
+### **Cara Kerja:**
+1. Prediksi rating dihitung untuk setiap pasangan pengguna-film.
+2. Selisih antara rating sebenarnya dan rating prediksi dihitung, lalu dikuadratkan.
+3. Nilai rata-rata dari kesalahan kuadrat dihitung, kemudian diakarkan untuk mendapatkan RMSE.
+
+### **Hasil Evaluasi:**
+Setelah dilakukan optimasi terhadap parameter model:
+- **RMSE untuk Collaborative Filtering**: **1.2383**
+
+### **Interpretasi:**
+- Nilai RMSE yang lebih kecil menunjukkan bahwa prediksi model lebih akurat.
+- Dalam kasus ini, RMSE **1.2383** menunjukkan bahwa rata-rata kesalahan prediksi model adalah sekitar 1.23 rating poin.
+
+---
+
+## **2. Precision@K**
+
+### **Penjelasan:**
+- Precision@K digunakan untuk mengevaluasi kualitas rekomendasi dengan menghitung proporsi item yang relevan dalam daftar rekomendasi top-K.
+- Metrik ini cocok untuk **Content-Based Filtering**, di mana tujuan utama adalah merekomendasikan item yang relevan berdasarkan metadata.
+
+### **Formula Precision@K**:
+![top](https://github.com/user-attachments/assets/0a6eb7bc-5886-4980-ba5f-14eb4a2eeb8b)
+
+### **Cara Kerja:**
+1. Daftar rekomendasi top-K untuk pengguna dihitung berdasarkan kesamaan metadata.
+2. Item relevan dalam daftar dihitung (misalnya, film yang sudah dirating tinggi oleh pengguna sebelumnya).
+3. Precision dihitung sebagai rasio antara jumlah item relevan dengan K.
+
+### **Hasil Evaluasi:**
+- **Precision@K untuk Content-Based Filtering**: **0.4000** (untuk \(K = 10\)).
+
+### **Interpretasi:**
+- Nilai **0.4000** berarti 40% dari rekomendasi dalam daftar top-10 adalah item relevan.
+- Nilai ini cukup baik untuk sistem rekomendasi berbasis metadata.
+
+---
+
+## **Perbandingan Hasil Evaluasi**
+
+| **Metrik**         | **Content-Based Filtering** | **Collaborative Filtering** |
+|---------------------|-----------------------------|------------------------------|
+| **RMSE**           | -                           | **1.2383**                   |
+| **Precision@K**    | **0.4000**                  | -                            |
+
+### **Kesimpulan**:
+1. **Collaborative Filtering** menunjukkan performa yang baik dengan nilai RMSE **1.2383**, yang berarti model cukup akurat dalam memprediksi rating pengguna.
+2. **Content-Based Filtering** memiliki precision **0.4000**, yang menunjukkan bahwa 40% rekomendasi dalam daftar top-10 adalah relevan.
+
+---
+
+## **Rekomendasi untuk Perbaikan**
+
+1. **Content-Based Filtering**:
+   - Tambahkan metadata lain, seperti deskripsi atau ulasan film, untuk meningkatkan relevansi rekomendasi.
+   - Gunakan algoritma berbasis embedding seperti **Word2Vec** untuk representasi metadata yang lebih kompleks.
+
+2. **Collaborative Filtering**:
+   - Gunakan pendekatan **Hybrid Filtering** untuk menangani masalah *cold start* pada pengguna atau item baru.
+   - Tambahkan parameter regularisasi untuk mengurangi overfitting pada data rating.
+
+---
+
+## **Kesimpulan Akhir**
+Evaluasi menunjukkan bahwa kedua pendekatan memiliki kekuatan masing-masing:
+- **Content-Based Filtering** cocok untuk memberikan rekomendasi berdasarkan metadata item.
+- **Collaborative Filtering** lebih efektif dalam memberikan rekomendasi personal berbasis pola interaksi pengguna.
+
+Kombinasi kedua pendekatan ini dapat memberikan sistem rekomendasi yang lebih adaptif dan akurat. 🚀
+
+
+
+
 
