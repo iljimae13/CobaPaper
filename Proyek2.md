@@ -113,85 +113,134 @@ Dataset terdiri dari beberapa file utama yang masing-masing memiliki fungsi khus
 
 ---
 
-## **Deskripsi File Dataset**
-
-### **1. `u.data` (Data Rating)**
-- **Path**: `/content/u.data`  
-- **Deskripsi**:  
-  Menyimpan informasi tentang interaksi pengguna dengan film dalam bentuk rating.  
-- **Kolom**:
-  - **`user_id`**: ID unik untuk setiap pengguna.
-  - **`item_id`**: ID unik untuk setiap film.
-  - **`rating`**: Rating yang diberikan pengguna terhadap film (skala 1-5).
-  - **`timestamp`**: Waktu pemberian rating.
-- **Fungsi**:  
-  Digunakan untuk membangun matriks interaksi pengguna-film (*User-Item Matrix*) sebagai dasar Collaborative Filtering.
+#### **Jumlah Data**
+Dataset terdiri dari beberapa file dengan rincian sebagai berikut:
+1. **Ratings Data** (`u.data`):
+   - **Jumlah baris**: 100,000 (interaksi pengguna dengan film berupa rating).
+   - **Jumlah kolom**: 4 (`user_id`, `item_id`, `rating`, `timestamp`).
+2. **Movies Data** (`u.item`):
+   - **Jumlah baris**: 1,682 (jumlah total film dalam dataset).
+   - **Jumlah kolom**: 24 (informasi tentang judul, genre, dan metadata lainnya).
+3. **Users Data** (`u.user`):
+   - **Jumlah baris**: 943 (jumlah pengguna).
+   - **Jumlah kolom**: 5 (`user_id`, `age`, `gender`, `occupation`, `zip_code`).
 
 ---
 
-### **2. `u.item` (Metadata Film)**
-- **Path**: `/content/u.item`  
-- **Deskripsi**:  
-  Menyimpan metadata tentang film, termasuk judul, genre, dan tanggal rilis.  
-- **Kolom**:
-  - **`item_id`**: ID unik untuk setiap film.
-  - **`title`**: Judul film.
-  - **`release_date`**: Tanggal rilis film.
-  - **`video_release_date`**: Tanggal rilis video (jika ada).
-  - **`IMDb_URL`**: URL IMDb untuk film.
-  - **Genre Columns**: Kolom one-hot encoding untuk berbagai genre seperti:
-    - **`Action`**, **`Adventure`**, **`Drama`**, **`Comedy`**, dll.
-- **Fungsi**:  
-  Digunakan dalam Content-Based Filtering untuk menghitung kesamaan antar film berdasarkan genre.
+### **Kondisi Data**
+1. **Missing Value**:
+   - **Ratings Data**: Tidak ada missing value.
+   - **Movies Data**: Kolom tertentu (seperti `release_date`) memiliki nilai kosong yang perlu ditangani.
+   - **Users Data**: Tidak ada missing value.
+2. **Duplikat**:
+   - Tidak ditemukan duplikat dalam dataset.
+3. **Outlier**:
+   - Pada data `age` dalam `u.user`, beberapa pengguna memiliki usia ekstrem (misalnya, di atas 70 tahun). Namun, ini masih relevan untuk analisis.
+4. **Distribusi Rating**:
+   - Rating berkisar dari 1 hingga 5, dengan mayoritas rating di rentang 3–4.
 
 ---
 
-### **3. `u.user` (Informasi Pengguna)**
-- **Path**: `/content/u.user`  
-- **Deskripsi**:  
-  Menyimpan informasi demografis pengguna.  
-- **Kolom**:
-  - **`user_id`**: ID unik untuk setiap pengguna.
-  - **`age`**: Usia pengguna.
-  - **`gender`**: Jenis kelamin pengguna (M/F).
-  - **`occupation`**: Pekerjaan pengguna.
-  - **`zip_code`**: Kode pos tempat tinggal pengguna.
-- **Fungsi**:  
-  Berguna untuk analisis demografi pengguna atau personalisasi rekomendasi berdasarkan atribut pengguna.
+### **Uraian Seluruh Fitur pada Data**
+Berikut adalah penjelasan setiap fitur pada dataset:
+
+#### **Ratings Data (`u.data`)**
+| **Fitur**       | **Deskripsi**                                                                 |
+|------------------|-------------------------------------------------------------------------------|
+| `user_id`        | ID unik untuk setiap pengguna.                                               |
+| `item_id`        | ID unik untuk setiap film.                                                   |
+| `rating`         | Nilai rating yang diberikan pengguna untuk film (skala 1-5).                |
+| `timestamp`      | Waktu ketika rating diberikan.                                               |
+
+#### **Movies Data (`u.item`)**
+| **Fitur**            | **Deskripsi**                                                            |
+|-----------------------|-------------------------------------------------------------------------|
+| `item_id`            | ID unik untuk setiap film.                                              |
+| `title`              | Judul film.                                                             |
+| `release_date`       | Tanggal rilis film.                                                     |
+| `video_release_date` | Tanggal rilis video (opsional).                                         |
+| `IMDb_URL`           | URL film pada IMDb.                                                     |
+| `genre`              | Kolom biner yang merepresentasikan 19 genre film (seperti Action, Drama).|
+
+#### **Users Data (`u.user`)**
+| **Fitur**       | **Deskripsi**                                                                 |
+|------------------|-------------------------------------------------------------------------------|
+| `user_id`        | ID unik untuk setiap pengguna.                                               |
+| `age`            | Usia pengguna.                                                              |
+| `gender`         | Jenis kelamin pengguna (`M` untuk laki-laki, `F` untuk perempuan).           |
+| `occupation`     | Pekerjaan pengguna.                                                         |
+| `zip_code`       | Kode pos pengguna.                                                          |
 
 ---
 
-### **4. `u.genre` (Genre Film)**
-- **Path**: `/content/u.genre`  
-- **Deskripsi**:  
-  Menyimpan daftar genre yang tersedia dalam dataset.  
-- **Kolom**:
-  - **`genre_name`**: Nama genre (misalnya: Action, Comedy, Drama).
-  - **`genre_id`**: ID unik untuk setiap genre.
-- **Fungsi**:  
-  Digunakan untuk memahami genre dalam dataset dan membantu analisis eksplorasi atau visualisasi.
+### **Kesimpulan**
+Dataset MovieLens 100k menyediakan data yang kaya untuk membangun sistem rekomendasi:
+1. **Interaksi pengguna dengan film** (ratings) dapat digunakan untuk pendekatan Collaborative Filtering.
+2. **Metadata film** (genre) sangat berguna untuk pendekatan Content-Based Filtering.
+3. **Informasi demografis pengguna** dapat digunakan untuk analisis tambahan terkait preferensi pengguna.
+
+### Mengapa Hanya Tiga File yang Di-load Langsung?
+
+Dalam sistem rekomendasi, hanya tiga file utama yang di-load langsung (`u_data`, `u_item`, dan `u_user`) karena file-file tersebut berisi data yang paling sering digunakan untuk proses modeling dan evaluasi. File lainnya (`u_info`, `u_genre`, dan `u_occupation`) dianggap sebagai data pendukung yang digunakan untuk eksplorasi atau dokumentasi tambahan. Berikut adalah rincian perannya:
 
 ---
 
-### **5. `u.info` (Ringkasan Dataset)**
-- **Path**: `/content/u.info`  
-- **Deskripsi**:  
-  Menyimpan informasi ringkasan dataset, seperti jumlah pengguna, jumlah film, dan jumlah rating.  
-- **Format**: Teks biasa dengan statistik dasar dataset.
-- **Fungsi**:  
-  Memberikan wawasan awal tentang skala dataset sebelum analisis lebih lanjut.
+#### **File yang Di-load Langsung**
+
+1. **`u_data`**  
+   - **Tujuan**: Berisi informasi interaksi pengguna dengan film berupa `rating`, yang merupakan inti dari proses rekomendasi.  
+   - **Kolom**:  
+     - `user_id`: ID pengguna  
+     - `item_id`: ID film  
+     - `rating`: Nilai rating dari pengguna untuk film tertentu  
+     - `timestamp`: Waktu interaksi  
+   - **Mengapa di-load?**: 
+     - Data ini adalah fondasi untuk Collaborative Filtering karena kita membutuhkan interaksi user-item.
+
+2. **`u_item`**  
+   - **Tujuan**: Berisi metadata tentang film, seperti judul, tanggal rilis, genre, dan lainnya.  
+   - **Kolom**:  
+     - `item_id`: ID film  
+     - `title`: Judul film  
+     - Genre (one-hot encoded)  
+   - **Mengapa di-load?**:  
+     - Data ini diperlukan untuk Content-Based Filtering, karena genre film digunakan untuk menghitung kesamaan antar film.
+
+3. **`u_user`**  
+   - **Tujuan**: Berisi informasi demografis pengguna, seperti usia, jenis kelamin, dan pekerjaan.  
+   - **Kolom**:  
+     - `user_id`: ID pengguna  
+     - `age`: Usia pengguna  
+     - `gender`: Jenis kelamin pengguna  
+     - `occupation`: Pekerjaan pengguna  
+     - `zip_code`: Kode pos pengguna  
+   - **Mengapa di-load?**:  
+     - Data ini digunakan untuk memahami demografi pengguna dan menganalisis pola interaksi dalam dataset.
 
 ---
 
-### **6. `u.occupation` (Daftar Pekerjaan)**
-- **Path**: `/content/u.occupation`  
-- **Deskripsi**:  
-  Menyimpan daftar pekerjaan yang tersedia dalam dataset.  
-- **Format**: Teks biasa dengan satu pekerjaan per baris.
-- **Fungsi**:  
-  Digunakan untuk eksplorasi lebih lanjut atau analisis demografi.
+#### **File Pendukung yang Di-load Secara Terpisah**
+
+1. **`u_info`**  
+   - **Tujuan**: Berisi informasi ringkasan tentang dataset, seperti jumlah pengguna, film, dan rating.  
+   - **Mengapa tidak di-load langsung?**:  
+     - File ini hanya berisi metadata statis, sehingga hanya digunakan untuk dokumentasi atau ringkasan analisis awal.
+
+2. **`u_genre`**  
+   - **Tujuan**: Berisi daftar genre yang tersedia di dataset beserta ID-nya.  
+   - **Mengapa tidak di-load langsung?**:  
+     - File ini hanya membantu memahami nama genre yang digunakan dalam kolom one-hot encoding di file `u_item`. Biasanya digunakan sekali saat eksplorasi.
+
+3. **`u_occupation`**  
+   - **Tujuan**: Berisi daftar pekerjaan pengguna yang tersedia di dataset.  
+   - **Mengapa tidak di-load langsung?**:  
+     - File ini hanya digunakan untuk referensi dalam analisis pekerjaan pengguna.
 
 ---
+
+#### **Kesimpulan**
+File **`u_data`**, **`u_item`**, dan **`u_user`** adalah data utama yang diperlukan untuk proses modeling dan evaluasi. Sedangkan file **`u_info`**, **`u_genre`**, dan **`u_occupation`** bersifat referensi pendukung, sehingga hanya di-load saat diperlukan untuk eksplorasi atau dokumentasi tambahan. Anda tetap bisa memuat semua file jika ingin eksplorasi yang lebih lengkap.
+
 
 ## **Exploratory Data Analysis (EDA)**
 
@@ -264,57 +313,119 @@ Dataset ini memberikan dasar yang baik untuk membangun sistem rekomendasi menggu
 
 ## **Tahapan dan Analisis**
 
+---
+
 ### **1. Mengecek Nilai Kosong**
-Pada tahap ini, dataset diperiksa untuk mengetahui apakah terdapat nilai kosong (*missing values*) di dalamnya. Jika ada, nilai kosong ditangani sesuai kebutuhan, misalnya dengan mengisi nilai default seperti **0** untuk data numerik atau string kosong (`''`) untuk data kategoris.
+Dataset diperiksa untuk mengetahui apakah terdapat nilai kosong (*missing values*). Jika ada, nilai kosong diisi sesuai kebutuhan:
+- **0** untuk data numerik (seperti rating).
+- String kosong (`''`) untuk data kategoris (seperti genre atau metadata).
 
 #### **Hasil:**
-- Dataset **Ratings** tidak memiliki nilai kosong.
-- Dataset **Movies** memiliki beberapa nilai kosong, yang telah diisi dengan string kosong.
-- Dataset **Users** juga tidak memiliki nilai kosong.
+- Dataset **Ratings**: Tidak ada nilai kosong.
+- Dataset **Movies**: Terdapat nilai kosong di beberapa kolom metadata, yang diisi dengan string kosong (`''`).
+- Dataset **Users**: Tidak ada nilai kosong.
 
 #### **Alasan:**
-Mengisi nilai kosong memastikan dataset tidak mengalami error selama proses transformasi atau analisis, terutama saat membangun matriks interaksi.
+Mengisi nilai kosong memastikan data dapat diproses tanpa gangguan atau error selama transformasi atau analisis.
 
 ---
 
-### **2. Membuat Matriks User-Item**
-Dataset interaksi pengguna dan film diubah menjadi **User-Item Matrix**, di mana:
-- Baris mewakili ID pengguna.
-- Kolom mewakili ID film.
-- Nilai dalam matriks adalah rating yang diberikan oleh pengguna untuk film tertentu.
+### **2. Menghapus Data Duplikat**
+Dataset diperiksa untuk melihat apakah ada data duplikat. Baris duplikat dihapus dari dataset.
 
 #### **Hasil:**
-Matriks User-Item berhasil dibuat, dengan dimensi **943 pengguna x 1682 film**. Nilai yang kosong dalam matriks diisi dengan **0**, menunjukkan bahwa pengguna belum memberikan rating untuk film tersebut.
+- Dataset **Ratings**: Tidak ada duplikasi.
+- Dataset **Movies**: Tidak ada duplikasi.
+- Dataset **Users**: Tidak ada duplikasi.
 
 #### **Alasan:**
-- Matriks User-Item adalah struktur data utama yang digunakan dalam algoritma **Collaborative Filtering**.
-- Nilai kosong diganti dengan **0** agar matriks bisa diolah oleh algoritma.
+Menghapus duplikasi penting untuk mencegah bias dalam analisis atau modeling.
 
 ---
 
-### **3. Menggabungkan Genre Menjadi String**
-Untuk pendekatan **Content-Based Filtering**, kolom genre yang awalnya dalam format one-hot encoding digabungkan menjadi string deskriptif. Genre digabung dengan nama film untuk membuat metadata.
+### **3. Membuat Matriks User-Item**
+Dataset **Ratings** digunakan untuk membangun **User-Item Matrix**, di mana:
+- **Baris**: Mewakili ID pengguna.
+- **Kolom**: Mewakili ID film.
+- **Nilai**: Rating yang diberikan pengguna untuk film tertentu.
+- Nilai kosong diisi dengan **0** untuk film yang belum dirating oleh pengguna.
 
 #### **Hasil:**
-Kolom baru `genre_combined` berhasil dibuat, berisi gabungan informasi genre dari setiap film. Contoh:
+Matriks **User-Item** berhasil dibuat dengan dimensi:
+- **943 pengguna x 1682 film**.
+- Nilai kosong digantikan dengan **0**.
+
+#### **Alasan:**
+- Matriks User-Item adalah struktur utama yang digunakan dalam algoritma **Collaborative Filtering**.
+- Mengganti nilai kosong dengan **0** memastikan algoritma dapat beroperasi pada matriks tanpa error.
+
+---
+
+### **4. Menggabungkan Genre Menjadi String**
+Kolom genre dalam dataset **Movies** awalnya dalam format one-hot encoding. Untuk **Content-Based Filtering**, genre digabung menjadi satu string deskriptif di kolom baru bernama `genre_combined`.
+
+#### **Hasil:**
+Kolom baru `genre_combined` berhasil dibuat, berisi deskripsi genre setiap film. Contoh:
 - **Film**: Toy Story (1995) → **Genre Combined**: Animation Children Comedy.
 
 #### **Alasan:**
-- Pendekatan Content-Based Filtering membutuhkan deskripsi lengkap untuk menghitung kesamaan antar film.
-- Menggabungkan genre membuat representasi deskriptif lebih sederhana.
+Pendekatan **Content-Based Filtering** membutuhkan deskripsi genre dalam format string untuk menghitung kesamaan antar film.
 
 ---
 
-### **4. Normalisasi Matriks User-Item**
-Nilai dalam **User-Item Matrix** dinormalisasi dengan cara:
-- Mengurangi rata-rata rating setiap pengguna dari setiap rating.
-- Normalisasi dilakukan untuk mengatasi bias pengguna yang cenderung memberikan rating terlalu tinggi atau terlalu rendah secara konsisten.
+### **5. Representasi TF-IDF untuk Genre**
+Kolom `genre_combined` direpresentasikan dalam format numerik menggunakan metode **TF-IDF (Term Frequency-Inverse Document Frequency)**. 
+- **TF-IDF** mengubah teks (deskripsi genre) menjadi vektor angka yang merepresentasikan kepentingan relatif dari genre dalam dataset.
 
 #### **Hasil:**
-Matriks normalisasi berhasil dibuat. Nilai positif menunjukkan rating lebih tinggi dari rata-rata pengguna, sedangkan nilai negatif menunjukkan rating lebih rendah dari rata-rata.
+TF-IDF menghasilkan matriks fitur genre dengan ukuran:
+- **1682 film x N fitur** (jumlah fitur tergantung pada jumlah unik kata dalam genre).
 
 #### **Alasan:**
-- Normalisasi membantu algoritma Collaborative Filtering menghasilkan rekomendasi yang lebih akurat dengan menghilangkan bias personal dari pengguna.
+- Representasi numerik ini digunakan untuk menghitung **Cosine Similarity** antar film dalam pendekatan Content-Based Filtering.
+- TF-IDF membantu menangkap relevansi genre yang lebih signifikan dibandingkan sekadar one-hot encoding.
+
+---
+
+### **6. Normalisasi Matriks User-Item**
+Matriks User-Item dinormalisasi dengan cara:
+- Mengurangi rata-rata rating setiap pengguna dari setiap nilai rating mereka dalam matriks.
+- Nilai normalisasi dihitung untuk setiap pengguna secara independen.
+
+#### **Hasil:**
+Matriks normalisasi memiliki nilai rata-rata 0 untuk setiap pengguna.
+
+#### **Alasan:**
+Normalisasi membantu mengurangi bias pengguna yang mungkin selalu memberikan rating terlalu tinggi atau terlalu rendah. Hal ini meningkatkan performa algoritma Collaborative Filtering.
+
+---
+
+### **7. Visualisasi Distribusi Data**
+Distribusi data rating dan genre divisualisasikan untuk memahami pola interaksi pengguna dan genre populer:
+- **Distribusi Rating**: Menampilkan frekuensi rating (1-5) dari pengguna.
+- **Distribusi Genre**: Menampilkan jumlah film dalam setiap genre.
+
+#### **Hasil:**
+- Distribusi rating menunjukkan sebagian besar pengguna memberikan rating di rentang 3-4.
+- Genre **Drama**, **Comedy**, dan **Action** adalah yang paling banyak muncul.
+
+#### **Alasan:**
+Visualisasi membantu memahami pola dalam dataset dan memandu langkah modeling berikutnya.
+
+---
+
+### **Kesimpulan**
+Tahapan data preparation telah dilakukan secara lengkap dan terstruktur:
+1. Mengecek nilai kosong.
+2. Menghapus data duplikat.
+3. Membuat matriks User-Item.
+4. Menggabungkan genre menjadi string.
+5. Membuat representasi TF-IDF untuk genre.
+6. Normalisasi matriks User-Item.
+7. Visualisasi distribusi data.
+8. Menyimpan data yang sudah diproses.
+
+Data ini siap digunakan untuk membangun model sistem rekomendasi dengan metode **Content-Based Filtering** dan **Collaborative Filtering**.
 
 ---
 
@@ -334,12 +445,35 @@ Content-Based Filtering merekomendasikan film yang mirip dengan film yang telah 
 ### **Proses:**
 1. **Menggabungkan Metadata**: Informasi genre untuk setiap film digabungkan menjadi satu string.
 2. **Menghitung Kesamaan**: Kesamaan antar film dihitung menggunakan Cosine Similarity berdasarkan representasi TF-IDF.
-3. **Menyusun Rekomendasi**: Film dengan kesamaan tertinggi dengan film yang dirating tinggi oleh pengguna direkomendasikan.
+3. **Menyusun Rekomendasi**: Film dengan kePendekatan **Content-Based Filtering** merekomendasikan item kepada pengguna berdasarkan kesamaan antara item yang sudah disukai atau diberi rating tinggi dengan item lainnya. 
+- Pada proyek ini, kesamaan antar film dihitung menggunakan **Cosine Similarity**, yang mengukur kesamaan vektor genre antar film.
+  ![cosine](https://github.com/user-attachments/assets/11737944-dad7-4c23-b0a2-b4d8143ed647)
+- **A** dan **B** adalah vektor representasi TF-IDF dari dua film.
+- Nilai Cosine Similarity berkisar dari 0 (tidak mirip) hingga 1 (sangat mirip).samaan tertinggi dengan film yang dirating tinggi oleh pengguna direkomendasikan.
 
 ### **Hasil Rekomendasi**:
 Sebagai contoh, untuk film **"Star Wars (1977)"**, berikut adalah rekomendasi yang dihasilkan:
 ![star](https://github.com/user-attachments/assets/b54d18e5-bc9d-4992-83c9-24159de3196e)
 
+### **Langkah-Langkah Implementasi**
+1. **TF-IDF Vectorization**:
+   - Genre gabungan setiap film diubah menjadi representasi numerik menggunakan **TF-IDF Vectorizer**.
+   - Parameter utama:
+     - `min_df=1`: Kata harus muncul di setidaknya 1 dokumen.
+     - `stop_words='english'`: Kata umum dalam bahasa Inggris diabaikan.
+2. **Menghitung Kesamaan**:
+   - Matriks TF-IDF digunakan untuk menghitung **Cosine Similarity** antar film.
+   - Matriks ini memiliki dimensi \(N \times N\), di mana \(N\) adalah jumlah film.
+3. **Rekomendasi**:
+   - Berdasarkan input berupa judul film, sistem mencocokkan film tersebut dengan film lainnya berdasarkan skor Cosine Similarity.
+   - Sistem memberikan daftar Top-N rekomendasi film yang paling mirip.
+
+### **Parameter Model**
+- **TF-IDF Vectorizer**:
+  - `min_df=1`
+  - `stop_words='english'`
+- **Cosine Similarity**:
+  - Tidak memerlukan parameter tambahan.
 
 ### **Kelebihan:**
 - **Cold Start untuk Pengguna Baru**: Tidak memerlukan data interaksi pengguna.
@@ -355,8 +489,14 @@ Sebagai contoh, untuk film **"Star Wars (1977)"**, berikut adalah rekomendasi ya
 
 ## **2. Collaborative Filtering (CF)**
 
-### **Cara Kerja:**
-Collaborative Filtering merekomendasikan film berdasarkan pola interaksi pengguna lain yang memiliki preferensi serupa. Model ini mencari kesamaan antar pengguna atau memanfaatkan teknik dekomposisi matriks seperti **SVD** untuk menghasilkan prediksi rating.
+### **Cara Kerja**
+Pendekatan **Collaborative Filtering** merekomendasikan item kepada pengguna berdasarkan pola interaksi pengguna lain yang memiliki preferensi serupa. 
+- Pada proyek ini, digunakan algoritma **Singular Value Decomposition (SVD)** untuk mendekomposisi matriks User-Item.
+  ![svd](https://github.com/user-attachments/assets/54cd12d7-a170-4284-8ae8-120bbb02ab43)
+- **R**: Matriks User-Item.
+- **U**: Matriks pengguna-laten.
+- **Σ**: Matriks diagonal dari nilai singular (latent factors).
+- **V**: Matriks item-laten.
 
 ### **Proses:**
 1. **Matriks Interaksi**: Membuat *User-Item Matrix* berdasarkan data interaksi pengguna.
@@ -364,10 +504,29 @@ Collaborative Filtering merekomendasikan film berdasarkan pola interaksi penggun
 3. **Prediksi Rating**: Membuat prediksi rating untuk setiap pasangan pengguna-film.
 4. **Menyusun Rekomendasi**: Film dengan prediksi rating tertinggi direkomendasikan.
 
+### **Langkah-Langkah Implementasi**
+1. **Matriks User-Item**:
+   - Dibuat dari dataset rating dengan dimensi \(M \times N\), di mana \(M\) adalah jumlah pengguna, dan \(N\) adalah jumlah film.
+2. **Normalisasi**:
+   - Matriks dinormalisasi dengan mengurangi rata-rata rating setiap pengguna untuk mengurangi bias.
+3. **Dekomposisi SVD**:
+   - Matriks User-Item dinormalisasi dipecah menjadi tiga matriks:
+     ![sig](https://github.com/user-attachments/assets/44f2edd2-db5f-4f07-bc64-e853eaab0c0e)
+   - Parameter utama:
+     - **Latent Factors (k)**: Menentukan jumlah dimensi fitur laten.
+4. **Prediksi Rating**:
+   - Matriks rating direkonstruksi menggunakan matriks hasil dekomposisi:
+     ![pred](https://github.com/user-attachments/assets/ce2af530-1cb4-4db7-82c8-7b49853822ae)
+   - Prediksi digunakan untuk merekomendasikan item yang belum dirating oleh pengguna.
+
+### **Parameter Model**
+- **Jumlah Latent Factors (k)**: 100.
+- **Iterasi**: 20 (default pada library SVD).
+- **Normalisasi**: Mengurangi rata-rata rating pengguna sebelum dekomposisi.
+
 ### **Hasil Rekomendasi**:
 Sebagai contoh, untuk pengguna dengan ID **1**, berikut adalah rekomendasi yang dihasilkan:
 ![id1](https://github.com/user-attachments/assets/cafcef1a-4e1b-46c7-a452-d024b6cb105b)
-
 
 ### **Kelebihan:**
 - **Personalisasi**: Rekomendasi berbasis preferensi pengguna.
